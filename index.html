@@ -1,783 +1,870 @@
-{
-  "title": "Introduction to Coding - JS and PYTHON",
-  "description": "A hands-on, 20-lesson journey through the fundamentals of programming using JavaScript and Python side by side \u2014 variables, logic, loops, functions, and a final mini project.",
-  "icon": "code",
-  "color": "linear-gradient(135deg,#7c5cff,#00d4ff)",
-  "order": 0,
-  "lessons": [
-    {
-      "title": "Welcome to Coding",
-      "order": 0,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "chat",
-          "title": "What is code?",
-          "body": "Code is a set of precise instructions that tells a computer exactly what to do, step by step. You'll learn two of the most popular languages in the world: JavaScript (the language of the web) and Python (loved for its clean, readable syntax)."
-        },
-        {
-          "type": "content",
-          "emoji": "rocket",
-          "title": "Why JS and Python?",
-          "body": "JavaScript runs in every web browser and powers interactive websites, apps, and games. Python is famous for readability and is widely used in data science, automation, and backend development. Learning both gives you a huge head start."
-        },
-        {
-          "type": "mcq",
-          "question": "Which of these best describes what 'code' is?",
-          "options": [
-            "A random collection of symbols",
-            "A precise set of instructions for a computer",
-            "A type of computer hardware",
-            "A design tool for images"
-          ],
-          "correctIndex": 1,
-          "explanation": "Code is instructions \u2014 precise, ordered steps a computer executes exactly as written."
-        },
-        {
-          "type": "fillblank",
-          "question": "JavaScript is the language of the ____.",
-          "answers": [
-            "web",
-            "browser"
-          ],
-          "explanation": "JavaScript runs natively in every web browser."
-        }
-      ]
-    },
-    {
-      "title": "Variables in JavaScript",
-      "order": 1,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Storing data with variables",
-          "body": "A variable is a labeled box that holds a value. In JavaScript, you create one using let, const, or var. let age = 25; creates a variable called age holding the number 25."
-        },
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "let vs const",
-          "body": "Use let when a value might change later. Use const when the value should never be reassigned. Modern JavaScript mostly avoids var."
-        },
-        {
-          "type": "mcq",
-          "question": "Which keyword should you use for a variable that will never change?",
-          "options": [
-            "let",
-            "const",
-            "var",
-            "static"
-          ],
-          "correctIndex": 1,
-          "explanation": "const locks the variable so it can't be reassigned."
-        },
-        {
-          "type": "fillblank",
-          "question": "Complete the code: ____ score = 10;  (use the keyword for a changeable variable)",
-          "answers": [
-            "let"
-          ],
-          "explanation": "let is used for variables that may be reassigned."
-        },
-        {
-          "type": "code",
-          "prompt": "Create a variable called greeting set to 'Hello World' and print it with console.log.",
-          "starterCode": "let greeting = '';\nconsole.log(greeting);",
-          "expectedOutput": "Hello World"
-        }
-      ]
-    },
-    {
-      "title": "Variables in Python",
-      "order": 2,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Python variables are even simpler",
-          "body": "Python has no let or const \u2014 you just write name = value. For example: age = 25. Python figures out the type automatically."
-        },
-        {
-          "type": "content",
-          "emoji": "book",
-          "title": "No semicolons needed",
-          "body": "Unlike JavaScript, Python statements don't end with a semicolon. Indentation (spaces) matters a lot in Python \u2014 it defines code blocks instead of curly braces {}."
-        },
-        {
-          "type": "mcq",
-          "question": "How do you create a variable named city with the value 'Paris' in Python?",
-          "options": [
-            "var city = 'Paris';",
-            "city = 'Paris'",
-            "let city = 'Paris'",
-            "city := 'Paris';"
-          ],
-          "correctIndex": 1,
-          "explanation": "Python assignment is just name = value, no keyword needed."
-        },
-        {
-          "type": "fillblank",
-          "question": "In Python, code blocks are defined using ____ rather than curly braces.",
-          "answers": [
-            "indentation",
-            "spaces",
-            "whitespace"
-          ],
-          "explanation": "Python relies on consistent indentation to define blocks of code."
-        }
-      ]
-    },
-    {
-      "title": "Data Types 101",
-      "order": 3,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "The building blocks",
-          "body": "Every value in code has a type. The core types you'll use constantly: numbers (25, 3.14), strings ('hello'), and booleans (true/false)."
-        },
-        {
-          "type": "content",
-          "emoji": "puzzle",
-          "title": "Type examples",
-          "body": "In JS: let x = 5 (number), let name = 'Sam' (string), let isOn = true (boolean). In Python: x = 5, name = 'Sam', is_on = True (capital T!)."
-        },
-        {
-          "type": "mcq",
-          "question": "In Python, how do you write the boolean value for 'true'?",
-          "options": [
-            "true",
-            "True",
-            "TRUE",
-            "1"
-          ],
-          "correctIndex": 1,
-          "explanation": "Python capitalizes its booleans: True and False."
-        },
-        {
-          "type": "mcq",
-          "question": "Which of these is a string in JavaScript?",
-          "options": [
-            "42",
-            "'hello'",
-            "true",
-            "undefined"
-          ],
-          "correctIndex": 1,
-          "explanation": "Text wrapped in quotes is a string."
-        }
-      ]
-    },
-    {
-      "title": "Strings & Operators in JS",
-      "order": 4,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Working with text",
-          "body": "Strings are text wrapped in quotes: 'hi' or \"hi\". You can combine them with the + operator, called concatenation."
-        },
-        {
-          "type": "content",
-          "emoji": "bulb",
-          "title": "Template literals",
-          "body": "Modern JS lets you embed variables directly in strings using backticks: `Hello ${name}!` \u2014 this is called a template literal and is cleaner than using +."
-        },
-        {
-          "type": "mcq",
-          "question": "What does `Score: ${10+5}` output?",
-          "options": [
-            "Score: 10+5",
-            "Score: ${10+5}",
-            "Score: 15",
-            "Error"
-          ],
-          "correctIndex": 2,
-          "explanation": "Template literals evaluate the expression inside ${} and insert the result."
-        },
-        {
-          "type": "code",
-          "prompt": "Use a template literal to print 'You have 5 points' where 5 comes from a variable called points.",
-          "starterCode": "let points = 5;\nconsole.log(`You have ${points} points`);",
-          "expectedOutput": "You have 5 points"
-        }
-      ]
-    },
-    {
-      "title": "Strings & f-strings in Python",
-      "order": 5,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Python string basics",
-          "body": "Strings work the same conceptually \u2014 text in quotes. Python lets you use either single or double quotes interchangeably."
-        },
-        {
-          "type": "content",
-          "emoji": "book",
-          "title": "f-strings",
-          "body": "Python's version of template literals is the f-string: f\"Hello {name}!\" \u2014 put an f before the quotes and use curly braces to embed variables."
-        },
-        {
-          "type": "mcq",
-          "question": "Which is a valid Python f-string that prints a variable called name?",
-          "options": [
-            "'Hello, ' + name",
-            "f\"Hello, {name}\"",
-            "\"Hello, ${name}\"",
-            "Hello, {name}"
-          ],
-          "correctIndex": 1,
-          "explanation": "f-strings start with f before the quotes, using {} to embed expressions."
-        },
-        {
-          "type": "fillblank",
-          "question": "Complete: f\"Total: {price}\" \u2014 the letter that must come right before the opening quote is ____.",
-          "answers": [
-            "f"
-          ],
-          "explanation": "The f prefix marks it as a formatted string."
-        }
-      ]
-    },
-    {
-      "title": "Arithmetic & Operators",
-      "order": 6,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "Doing math in code",
-          "body": "Both languages support + - * / for arithmetic. JavaScript and Python both use % for remainder (modulo), and ** for exponents."
-        },
-        {
-          "type": "mcq",
-          "question": "What does 10 % 3 evaluate to?",
-          "options": [
-            3,
-            1,
-            0,
-            10
-          ],
-          "correctIndex": 1,
-          "explanation": "10 divided by 3 is 3 remainder 1 \u2014 modulo returns the remainder."
-        },
-        {
-          "type": "mcq",
-          "question": "What does 2 ** 3 evaluate to in both JS and Python?",
-          "options": [
-            5,
-            6,
-            8,
-            9
-          ],
-          "correctIndex": 2,
-          "explanation": "** is exponentiation: 2 to the power of 3 is 8."
-        },
-        {
-          "type": "code",
-          "prompt": "Print the result of 7 * 6 using console.log.",
-          "starterCode": "console.log(7 * 6);",
-          "expectedOutput": "42"
-        }
-      ]
-    },
-    {
-      "title": "Conditionals in JavaScript",
-      "order": 7,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "puzzle",
-          "title": "Making decisions",
-          "body": "if statements let your code branch based on a condition. if (age >= 18) { ... } else { ... } runs different code depending on whether the condition is true."
-        },
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "Comparison operators",
-          "body": "== checks value loosely, === checks value AND type (safer, use this by default). !=, !==, <, >, <=, >= all work as you'd expect."
-        },
-        {
-          "type": "mcq",
-          "question": "Which operator should you generally prefer for equality checks in JS?",
-          "options": [
-            "==",
-            "===",
-            "=",
-            "equals()"
-          ],
-          "correctIndex": 1,
-          "explanation": "=== checks both value and type, avoiding unexpected type coercion bugs."
-        },
-        {
-          "type": "code",
-          "prompt": "Write an if/else that logs 'Adult' if age is 18 or more, otherwise logs 'Minor'. age is already defined as 20.",
-          "starterCode": "let age = 20;\nif (age >= 18) {\n  console.log('Adult');\n} else {\n  console.log('Minor');\n}",
-          "expectedOutput": "Adult"
-        }
-      ]
-    },
-    {
-      "title": "Conditionals in Python",
-      "order": 8,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "if / elif / else",
-          "body": "Python uses if, elif (not 'else if'), and else. Notice there are no parentheses or curly braces \u2014 just a colon and indentation."
-        },
-        {
-          "type": "content",
-          "emoji": "book",
-          "title": "Example",
-          "body": "if age >= 18:\n    print('Adult')\nelif age >= 13:\n    print('Teen')\nelse:\n    print('Child')"
-        },
-        {
-          "type": "mcq",
-          "question": "What's the Python keyword for 'else if'?",
-          "options": [
-            "elseif",
-            "else if",
-            "elif",
-            "elsif"
-          ],
-          "correctIndex": 2,
-          "explanation": "Python uses the contraction elif."
-        },
-        {
-          "type": "fillblank",
-          "question": "In Python, an if statement must end with a ____ before the indented block.",
-          "answers": [
-            ":",
-            "colon"
-          ],
-          "explanation": "A colon signals the start of the indented code block."
-        }
-      ]
-    },
-    {
-      "title": "Comparison & Logical Operators",
-      "order": 9,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "bulb",
-          "title": "Combining conditions",
-          "body": "Logical operators let you combine multiple checks. JavaScript: && (and), || (or), ! (not). Python: and, or, not \u2014 spelled out as words."
-        },
-        {
-          "type": "mcq",
-          "question": "How do you write logical AND in Python?",
-          "options": [
-            "&&",
-            "and",
-            "AND",
-            "&"
-          ],
-          "correctIndex": 1,
-          "explanation": "Python spells out 'and' instead of using symbols."
-        },
-        {
-          "type": "mcq",
-          "question": "What does !isLoggedIn mean in JavaScript?",
-          "options": [
-            "isLoggedIn is true",
-            "isLoggedIn is false",
-            "The opposite of whatever isLoggedIn currently is",
-            "A syntax error"
-          ],
-          "correctIndex": 2,
-          "explanation": "! negates a boolean \u2014 it flips true to false and vice versa."
-        },
-        {
-          "type": "code",
-          "prompt": "Log 'Access granted' only if age is at least 18 AND hasID is true. Both variables are already set.",
-          "starterCode": "let age = 20;\nlet hasID = true;\nif (age >= 18 && hasID) {\n  console.log('Access granted');\n}",
-          "expectedOutput": "Access granted"
-        }
-      ]
-    },
-    {
-      "title": "Loops: for loop in JavaScript",
-      "order": 10,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "Repeating actions",
-          "body": "Loops let you run code multiple times without copy-pasting it. A classic for loop: for (let i = 0; i < 5; i++) { console.log(i); } runs 5 times, with i going 0 through 4."
-        },
-        {
-          "type": "content",
-          "emoji": "gear",
-          "title": "Anatomy of a for loop",
-          "body": "Three parts separated by semicolons: starting value (let i = 0), the condition to keep going (i < 5), and what happens after each pass (i++, meaning add 1)."
-        },
-        {
-          "type": "mcq",
-          "question": "How many times does 'for (let i = 0; i < 4; i++)' run?",
-          "options": [
-            3,
-            4,
-            5,
-            "Infinite"
-          ],
-          "correctIndex": 1,
-          "explanation": "i starts at 0 and stops once i is no longer less than 4: 0,1,2,3 \u2014 four runs."
-        },
-        {
-          "type": "code",
-          "prompt": "Use a for loop to print numbers 1 through 3 (one per line).",
-          "starterCode": "for (let i = 1; i <= 3; i++) {\n  console.log(i);\n}",
-          "expectedOutput": "1\n2\n3"
-        }
-      ]
-    },
-    {
-      "title": "Loops: for loop in Python",
-      "order": 11,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Looping over ranges",
-          "body": "Python's for loop typically uses range(): for i in range(5): print(i) \u2014 this loops with i from 0 to 4, just like the JS example."
-        },
-        {
-          "type": "content",
-          "emoji": "book",
-          "title": "Looping over collections",
-          "body": "Python for loops are also great for iterating directly over items: for fruit in ['apple','banana']: print(fruit) \u2014 no index counting needed."
-        },
-        {
-          "type": "mcq",
-          "question": "What values does range(3) produce?",
-          "options": [
-            "1, 2, 3",
-            "0, 1, 2",
-            "0, 1, 2, 3",
-            "1, 2"
-          ],
-          "correctIndex": 1,
-          "explanation": "range(3) produces 0, 1, 2 \u2014 three values starting at 0."
-        },
-        {
-          "type": "fillblank",
-          "question": "Complete: for i in ____(5):  \u2014 the built-in function used to generate a sequence of numbers.",
-          "answers": [
-            "range"
-          ],
-          "explanation": "range() generates a sequence of numbers to loop over."
-        }
-      ]
-    },
-    {
-      "title": "While Loops",
-      "order": 12,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "Looping until a condition changes",
-          "body": "A while loop keeps running as long as its condition is true. Useful when you don't know in advance how many times you'll loop."
-        },
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "JS example",
-          "body": "let count = 0;\nwhile (count < 3) {\n  console.log(count);\n  count++;\n}"
-        },
-        {
-          "type": "mcq",
-          "question": "What's the biggest danger with while loops?",
-          "options": [
-            "They run too fast",
-            "Forgetting to update the condition, causing an infinite loop",
-            "They cannot use variables",
-            "They only work with numbers"
-          ],
-          "correctIndex": 1,
-          "explanation": "If the condition never becomes false, the loop runs forever and can freeze your program."
-        },
-        {
-          "type": "code",
-          "prompt": "Use a while loop to print 0, 1, 2 (one per line) using a variable i starting at 0.",
-          "starterCode": "let i = 0;\nwhile (i < 3) {\n  console.log(i);\n  i++;\n}",
-          "expectedOutput": "0\n1\n2"
-        }
-      ]
-    },
-    {
-      "title": "Arrays in JavaScript",
-      "order": 13,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "book",
-          "title": "Lists of values",
-          "body": "An array holds multiple values in order: let fruits = ['apple','banana','cherry']. Access items by index, starting at 0: fruits[0] is 'apple'."
-        },
-        {
-          "type": "content",
-          "emoji": "gear",
-          "title": "Useful array methods",
-          "body": ".push(item) adds to the end, .length gives the count, .map() and .filter() transform arrays without writing manual loops."
-        },
-        {
-          "type": "mcq",
-          "question": "What is fruits[1] if fruits = ['apple','banana','cherry']?",
-          "options": [
-            "apple",
-            "banana",
-            "cherry",
-            "undefined"
-          ],
-          "correctIndex": 1,
-          "explanation": "Arrays are zero-indexed, so index 1 is the second item: 'banana'."
-        },
-        {
-          "type": "code",
-          "prompt": "Create an array called nums with values 1, 2, 3 and print its length using console.log.",
-          "starterCode": "let nums = [1, 2, 3];\nconsole.log(nums.length);",
-          "expectedOutput": "3"
-        }
-      ]
-    },
-    {
-      "title": "Lists in Python",
-      "order": 14,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Python's version of arrays: lists",
-          "body": "fruits = ['apple', 'banana', 'cherry'] \u2014 same square bracket syntax, also zero-indexed: fruits[0] is 'apple'."
-        },
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "Handy list operations",
-          "body": ".append(item) adds to the end (like push in JS), len(fruits) gives the count instead of .length, and fruits[-1] gets the last item \u2014 negative indexing is a Python-only trick."
-        },
-        {
-          "type": "mcq",
-          "question": "How do you get the last item of a Python list called nums without knowing its length?",
-          "options": [
-            "nums[end]",
-            "nums[-1]",
-            "nums.last()",
-            "nums[len]"
-          ],
-          "correctIndex": 1,
-          "explanation": "Negative indices count from the end: -1 is the last item."
-        },
-        {
-          "type": "fillblank",
-          "question": "Complete: fruits.____('mango')  \u2014 the method that adds an item to the end of a Python list.",
-          "answers": [
-            "append"
-          ],
-          "explanation": "append() adds a new item to the end of a list."
-        }
-      ]
-    },
-    {
-      "title": "Functions in JavaScript",
-      "order": 15,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "gear",
-          "title": "Reusable blocks of code",
-          "body": "A function packages up code you can run again and again. function greet(name) { return `Hello, ${name}!`; } \u2014 call it with greet('Ada')."
-        },
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Arrow functions",
-          "body": "Modern JS often uses arrow functions: const greet = (name) => `Hello, ${name}!`; \u2014 shorter syntax, very common in real codebases."
-        },
-        {
-          "type": "mcq",
-          "question": "What keyword returns a value from a JavaScript function?",
-          "options": [
-            "give",
-            "return",
-            "output",
-            "yield"
-          ],
-          "correctIndex": 1,
-          "explanation": "return sends a value back out of the function to wherever it was called."
-        },
-        {
-          "type": "code",
-          "prompt": "Write a function called add that takes two numbers and returns their sum. Then log add(4,5).",
-          "starterCode": "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(4, 5));",
-          "expectedOutput": "9"
-        }
-      ]
-    },
-    {
-      "title": "Functions in Python",
-      "order": 16,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Defining functions with def",
-          "body": "def greet(name):\n    return f\"Hello, {name}!\" \u2014 Python uses the def keyword instead of function, and again relies on indentation instead of braces."
-        },
-        {
-          "type": "content",
-          "emoji": "chat",
-          "title": "Calling functions",
-          "body": "Once defined, you call it the same way as JS: greet('Ada'). Python functions can also have default parameter values: def greet(name='friend')."
-        },
-        {
-          "type": "mcq",
-          "question": "Which keyword starts a function definition in Python?",
-          "options": [
-            "function",
-            "func",
-            "def",
-            "fn"
-          ],
-          "correctIndex": 2,
-          "explanation": "Python functions are defined with def."
-        },
-        {
-          "type": "fillblank",
-          "question": "In Python, if a function has no explicit return statement, it returns ____ by default.",
-          "answers": [
-            "None"
-          ],
-          "explanation": "Python functions implicitly return None if nothing is explicitly returned."
-        }
-      ]
-    },
-    {
-      "title": "Objects vs Dictionaries",
-      "order": 17,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "book",
-          "title": "JS Objects",
-          "body": "Objects group related data with named keys: let user = { name: 'Ada', age: 30 }; Access with user.name or user['name']."
-        },
-        {
-          "type": "content",
-          "emoji": "code",
-          "title": "Python Dictionaries",
-          "body": "Python's equivalent is the dict: user = {'name': 'Ada', 'age': 30} \u2014 access with user['name']. Note Python dicts always use bracket access, not dot notation."
-        },
-        {
-          "type": "mcq",
-          "question": "How do you access the 'age' value from a Python dict called user?",
-          "options": [
-            "user.age",
-            "user['age']",
-            "user->age",
-            "user::age"
-          ],
-          "correctIndex": 1,
-          "explanation": "Python dictionaries use bracket notation with the key as a string."
-        },
-        {
-          "type": "code",
-          "prompt": "Create an object called car with a property model set to 'Tesla', then log car.model.",
-          "starterCode": "let car = { model: 'Tesla' };\nconsole.log(car.model);",
-          "expectedOutput": "Tesla"
-        }
-      ]
-    },
-    {
-      "title": "Debugging & Common Errors",
-      "order": 18,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "flask",
-          "title": "Reading error messages",
-          "body": "Errors aren't scary \u2014 they're clues. A message like 'x is not defined' tells you exactly what's wrong: you used a variable before creating it."
-        },
-        {
-          "type": "content",
-          "emoji": "flask",
-          "title": "Common beginner mistakes",
-          "body": "Mismatched quotes, forgetting a closing bracket, misspelling a variable name, and mixing up = (assignment) with == or === (comparison) are the classics. Slow down and read line by line."
-        },
-        {
-          "type": "mcq",
-          "question": "What does '= ' do compared to '=='?",
-          "options": [
-            "They are identical",
-            "= assigns a value, == compares values",
-            "= compares, == assigns",
-            "Neither works in code"
-          ],
-          "correctIndex": 1,
-          "explanation": "A single = assigns a value to a variable; == (or ===) compares two values."
-        },
-        {
-          "type": "fillblank",
-          "question": "If the console says 'SyntaxError', it usually means you have a mistake in your code's ____.",
-          "answers": [
-            "syntax",
-            "structure",
-            "grammar"
-          ],
-          "explanation": "A SyntaxError means the code doesn't follow the language's grammar rules \u2014 often a missing bracket or quote."
-        }
-      ]
-    },
-    {
-      "title": "Mini Project: Simple Calculator",
-      "order": 19,
-      "steps": [
-        {
-          "type": "content",
-          "emoji": "trophy",
-          "title": "Let's build something real",
-          "body": "You now know variables, conditionals, loops, and functions \u2014 enough to build a real mini project: a simple calculator function."
-        },
-        {
-          "type": "content",
-          "emoji": "target",
-          "title": "Planning it out",
-          "body": "Our calculator will take two numbers and an operator ('+', '-', '*', '/'), then return the correct result using an if/else chain."
-        },
-        {
-          "type": "mcq",
-          "question": "Which structure is best suited for choosing between +, -, *, and / based on a symbol?",
-          "options": [
-            "A single variable",
-            "A loop",
-            "An if/else if chain",
-            "A string reversal"
-          ],
-          "correctIndex": 2,
-          "explanation": "Multiple distinct choices based on a condition is exactly what if/else if chains are for."
-        },
-        {
-          "type": "code",
-          "prompt": "Write a function calculate(a, b, op) that returns a+b if op is '+', otherwise a-b. Then log calculate(10, 4, '+').",
-          "starterCode": "function calculate(a, b, op) {\n  if (op === '+') {\n    return a + b;\n  } else {\n    return a - b;\n  }\n}\nconsole.log(calculate(10, 4, '+'));",
-          "expectedOutput": "14"
-        },
-        {
-          "type": "content",
-          "emoji": "trophy",
-          "title": "You did it!",
-          "body": "You just wrote a working calculator function using everything from this course: variables, conditionals, and functions. That's real programming."
-        }
-      ]
-    }
-  ]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EverythingLearn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0f0c29; --bg2:#302b63; --bg3:#24243e;
+  --accent:#7c5cff; --accent2:#00d4ff; --accent3:#ff5c8a;
+  --green:#2ecc71; --yellow:#ffcf4d; --red:#ff5c5c;
+  --card:rgba(255,255,255,0.06); --card-border:rgba(255,255,255,0.12);
+  --text:#f4f4fb; --text-dim:#a9a6c8;
+  --radius:20px;
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+html.locked,body.locked{overflow:hidden;height:100%;}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ic svg{width:100%;height:100%;display:block;}
+body{
+  font-family:'Inter',sans-serif; color:var(--text);
+  background:linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),#1b1836);
+  background-size:400% 400%; animation:gradientShift 18s ease infinite;
+  min-height:100vh; overflow-x:hidden;
+}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif;}
+.bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.35;animation:float 12s ease-in-out infinite;}
+.orb1{width:400px;height:400px;background:var(--accent);top:-100px;left:-100px;animation-delay:0s;}
+.orb2{width:300px;height:300px;background:var(--accent2);bottom:-80px;right:-80px;animation-delay:3s;}
+.orb3{width:250px;height:250px;background:var(--accent3);top:40%;left:60%;animation-delay:6s;}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
+
+#app{position:relative;z-index:1;min-height:100vh;}
+.hidden{display:none !important;}
+
+/* ---- Nav ---- */
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;backdrop-filter:blur(10px);position:sticky;top:0;z-index:20;background:rgba(15,12,41,0.35);border-bottom:1px solid var(--card-border);}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px rgba(124,92,255,0.5);animation:pulse 3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.nav-right{display:flex;align-items:center;gap:18px;}
+.streak-pill,.xp-pill{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--card-border);padding:7px 14px;border-radius:999px;font-weight:600;font-size:0.9rem;}
+.btn{cursor:pointer;border:none;border-radius:12px;font-family:'Inter',sans-serif;font-weight:600;transition:transform .15s ease, box-shadow .15s ease;}
+.btn:active{transform:scale(0.95);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:10px 20px;box-shadow:0 4px 18px rgba(124,92,255,0.4);}
+.btn-primary:hover{box-shadow:0 6px 24px rgba(124,92,255,0.6);transform:translateY(-2px);}
+.btn-ghost{background:var(--card);border:1px solid var(--card-border);color:var(--text);padding:10px 18px;}
+.btn-ghost:hover{background:rgba(255,255,255,0.12);}
+
+/* ---- Auth screen ---- */
+#authScreen{display:flex;align-items:center;justify-content:center;min-height:90vh;padding:20px;}
+.auth-card{background:var(--card);border:1px solid var(--card-border);backdrop-filter:blur(16px);border-radius:var(--radius);padding:40px;width:100%;max-width:400px;animation:popIn .5s cubic-bezier(.2,1.4,.4,1);}
+@keyframes popIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.auth-card h1{font-size:1.8rem;margin-bottom:6px;text-align:center;}
+.auth-sub{color:var(--text-dim);text-align:center;margin-bottom:26px;font-size:0.95rem;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:0.85rem;color:var(--text-dim);margin-bottom:6px;}
+.field input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--card-border);background:rgba(255,255,255,0.05);color:var(--text);font-size:0.95rem;outline:none;transition:border .15s;}
+.field input:focus{border-color:var(--accent2);}
+.auth-toggle{text-align:center;margin-top:16px;font-size:0.9rem;color:var(--text-dim);}
+.auth-toggle a{color:var(--accent2);cursor:pointer;font-weight:600;}
+.auth-error{color:var(--red);font-size:0.85rem;margin-bottom:10px;min-height:18px;}
+.auth-card .btn-primary{width:100%;padding:13px;font-size:1rem;}
+
+/* ---- Dashboard ---- */
+#dashboard{padding:30px 32px 80px;max-width:1200px;margin:0 auto;}
+.hero{margin-bottom:30px;}
+.hero h1{font-size:2rem;margin-bottom:6px;}
+.hero p{color:var(--text-dim);}
+.progress-strip{display:flex;gap:16px;margin:24px 0;flex-wrap:wrap;}
+.stat-card{flex:1;min-width:140px;background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:18px;text-align:center;}
+.stat-card .num{font-size:1.7rem;font-weight:800;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat-card .lbl{color:var(--text-dim);font-size:0.85rem;margin-top:4px;}
+
+.section-title{font-size:1.3rem;margin:34px 0 16px;display:flex;align-items:center;gap:8px;}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
+.course-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:22px;cursor:pointer;position:relative;overflow:hidden;transition:transform .25s ease, box-shadow .25s ease;animation:fadeUp .5s ease both;}
+.course-card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(0,0,0,0.35);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.course-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,0,0,0.3);}
+.course-card h3{font-size:1.15rem;margin-bottom:6px;}
+.course-card p{color:var(--text-dim);font-size:0.88rem;line-height:1.4;margin-bottom:14px;min-height:38px;}
+.course-progress-bar{height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;margin-bottom:6px;}
+.course-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:999px;transition:width .6s cubic-bezier(.2,1,.3,1);}
+.course-progress-txt{font-size:0.78rem;color:var(--text-dim);}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-dim);}
+
+/* ---- Lesson list panel ---- */
+#courseView{padding:30px 32px 80px;max-width:900px;margin:0 auto;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--text-dim);cursor:pointer;margin-bottom:18px;font-weight:600;}
+.back-btn:hover{color:var(--text);}
+.course-header{display:flex;gap:18px;align-items:center;margin-bottom:26px;}
+.course-header .course-icon{margin-bottom:0;width:64px;height:64px;font-size:2rem;flex-shrink:0;}
+.lesson-path{display:flex;flex-direction:column;gap:14px;position:relative;}
+.lesson-node{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:16px 20px;cursor:pointer;transition:transform .2s ease, background .2s ease;animation:fadeUp .4s ease both;}
+.lesson-node:hover{transform:translateX(6px);background:rgba(255,255,255,0.1);}
+.lesson-node.locked{opacity:0.45;cursor:not-allowed;}
+.lesson-node.locked:hover{transform:none;}
+.lesson-bullet{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;background:rgba(255,255,255,0.08);border:2px solid var(--card-border);}
+.lesson-node.done .lesson-bullet{background:linear-gradient(135deg,var(--green),#27ae60);border-color:transparent;}
+.lesson-node.current .lesson-bullet{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;animation:pulse 2s infinite;}
+.lesson-info h4{font-size:1.02rem;margin-bottom:3px;}
+.lesson-info span{font-size:0.8rem;color:var(--text-dim);}
+
+/* ---- Lesson player ---- */
+#lessonPlayer{position:fixed;inset:0;background:linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3));background-size:400% 400%;animation:gradientShift 18s ease infinite;z-index:100;display:flex;flex-direction:column;}
+.player-top{display:flex;align-items:center;gap:16px;padding:18px 26px;}
+.player-close{cursor:pointer;font-size:1.4rem;color:var(--text-dim);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s;}
+.player-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+.player-track{flex:1;height:12px;background:rgba(255,255,255,0.1);border-radius:999px;overflow:hidden;}
+.player-track-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:999px;transition:width .5s cubic-bezier(.2,1,.3,1);}
+.player-hearts{display:flex;gap:3px;font-size:1.1rem;}
+.player-body{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.step-card{max-width:640px;width:100%;animation:stepIn .45s cubic-bezier(.2,1,.3,1);}
+@keyframes stepIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.step-tag{display:inline-block;background:var(--card);border:1px solid var(--card-border);padding:5px 14px;border-radius:999px;font-size:0.75rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:18px;}
+.step-card h2{font-size:1.6rem;margin-bottom:16px;line-height:1.3;}
+.step-card .body-text{color:var(--text-dim);font-size:1.02rem;line-height:1.7;margin-bottom:10px;}
+.step-emoji{display:flex;justify-content:center;color:var(--accent2);margin:10px 0 22px;animation:bounce 2.2s ease infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.options{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+.option{background:var(--card);border:2px solid var(--card-border);border-radius:14px;padding:15px 18px;cursor:pointer;transition:all .18s ease;font-size:0.98rem;display:flex;align-items:center;gap:12px;}
+.option:hover{border-color:var(--accent2);background:rgba(0,212,255,0.08);}
+.option.selected{border-color:var(--accent);background:rgba(124,92,255,0.15);}
+.option.correct{border-color:var(--green);background:rgba(46,204,113,0.18);animation:shakeSuccess .4s;}
+.option.wrong{border-color:var(--red);background:rgba(255,92,92,0.18);animation:shakeFail .4s;}
+@keyframes shakeSuccess{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@keyframes shakeFail{0%,20%,40%,60%,80%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-6px)}15%,35%,55%,75%,95%{transform:translateX(6px)}}
+.option-letter{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;flex-shrink:0;}
+
+.fill-input{width:100%;padding:14px 16px;border-radius:12px;border:2px solid var(--card-border);background:rgba(255,255,255,0.05);color:var(--text);font-size:1.05rem;outline:none;margin-top:16px;font-family:'Inter',sans-serif;}
+.fill-input:focus{border-color:var(--accent2);}
+.fill-input.correct{border-color:var(--green);background:rgba(46,204,113,0.1);}
+.fill-input.wrong{border-color:var(--red);background:rgba(255,92,92,0.1);}
+
+.code-box{margin-top:16px;background:#0d0b1e;border:1px solid var(--card-border);border-radius:14px;overflow:hidden;}
+.code-box .code-head{display:flex;gap:6px;padding:10px 14px;background:rgba(255,255,255,0.04);}
+.code-dot{width:10px;height:10px;border-radius:50%;}
+.code-box textarea{width:100%;background:transparent;border:none;color:#c8ffcf;font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:0.92rem;padding:16px;min-height:130px;resize:vertical;outline:none;line-height:1.5;}
+.code-output{padding:12px 16px;font-family:monospace;font-size:0.85rem;border-top:1px solid var(--card-border);color:var(--text-dim);white-space:pre-wrap;}
+.code-output.ok{color:var(--green);}
+.code-output.err{color:var(--red);}
+
+.feedback-banner{position:fixed;left:0;right:0;bottom:0;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;transform:translateY(110%);transition:transform .35s cubic-bezier(.2,1,.3,1);z-index:5;}
+.feedback-banner.show{transform:translateY(0);}
+.feedback-banner.correct{background:rgba(46,204,113,0.18);border-top:2px solid var(--green);}
+.feedback-banner.wrong{background:rgba(255,92,92,0.18);border-top:2px solid var(--red);}
+.feedback-left{display:flex;align-items:center;gap:14px;}
+.feedback-icon{font-size:1.8rem;}
+.feedback-text h4{font-size:1.05rem;}
+.feedback-text p{font-size:0.85rem;color:var(--text-dim);}
+.player-nav-btn{padding:13px 30px;font-size:1rem;}
+
+/* ---- Lesson complete ---- */
+.complete-screen{text-align:center;max-width:420px;}
+.complete-screen .big-emoji{font-size:5rem;animation:popIn .6s cubic-bezier(.2,1.4,.4,1);}
+.complete-screen h2{font-size:1.8rem;margin:10px 0;}
+.xp-gain{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:10px 22px;border-radius:999px;font-weight:700;margin:14px 0 24px;}
+.confetti{position:fixed;top:-20px;width:10px;height:10px;z-index:200;pointer-events:none;animation:confettiFall linear forwards;}
+@keyframes confettiFall{to{transform:translateY(105vh) rotate(720deg);opacity:0.3;}}
+
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--card);border:1px solid var(--card-border);backdrop-filter:blur(10px);padding:12px 22px;border-radius:12px;z-index:300;transition:transform .3s ease;font-size:0.9rem;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+.spinner{width:40px;height:40px;border:4px solid rgba(255,255,255,0.1);border-top-color:var(--accent2);border-radius:50%;animation:spin .8s linear infinite;margin:60px auto;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:640px){
+  nav{padding:14px 16px;} #dashboard,#courseView{padding:20px 16px 60px;}
+  .step-card h2{font-size:1.3rem;}
+}
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+<div id="app">
+
+  <!-- AUTH SCREEN -->
+  <div id="authScreen">
+    <div class="auth-card">
+      <h1>EverythingLearn</h1>
+      <p class="auth-sub" id="authSubtitle">Welcome back! Log in to continue your streak.</p>
+      <div class="auth-error" id="authError"></div>
+      <div class="field" id="nameField" style="display:none;">
+        <label>Display name</label>
+        <input type="text" id="authName" placeholder="Ada Lovelace">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="authEmail" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="authPassword" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" id="authSubmit">Log In</button>
+      <div class="auth-toggle" id="authToggle">Don't have an account? <a id="authToggleLink">Sign up</a></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP (nav + dashboard) -->
+  <div id="mainApp" class="hidden">
+    <nav>
+      <div class="logo"><div class="logo-mark" id="logoMark"></div> EverythingLearn</div>
+      <div class="nav-right">
+        <div class="streak-pill"><span class="ic" id="streakIcon" style="width:16px;height:16px;"></span> <span id="streakCount">0</span></div>
+        <div class="xp-pill"><span class="ic" id="xpIcon" style="width:16px;height:16px;"></span> <span id="xpCount">0</span> XP</div>
+        <button class="btn btn-ghost" id="logoutBtn">Log out</button>
+      </div>
+    </nav>
+
+    <div id="dashboard">
+      <div class="hero">
+        <h1 id="greeting">Hey there</h1>
+        <p>Pick a course and keep the streak alive.</p>
+      </div>
+      <div class="progress-strip">
+        <div class="stat-card"><div class="num" id="statCourses">0</div><div class="lbl">Courses started</div></div>
+        <div class="stat-card"><div class="num" id="statLessons">0</div><div class="lbl">Lessons completed</div></div>
+        <div class="stat-card"><div class="num" id="statXp">0</div><div class="lbl">Total XP</div></div>
+        <div class="stat-card"><div class="num" id="statStreak">0</div><div class="lbl">Day streak</div></div>
+      </div>
+      <h2 class="section-title"><span class="ic" id="allCoursesIcon" style="width:20px;height:20px;"></span> All courses</h2>
+      <div class="course-grid" id="courseGrid"><div class="spinner"></div></div>
+    </div>
+
+    <div id="courseView" class="hidden">
+      <div class="back-btn" id="backToDash"><span class="ic" id="backIcon" style="width:16px;height:16px;"></span> Back to courses</div>
+      <div class="course-header">
+        <div class="course-icon" id="cvIcon"></div>
+        <div>
+          <h2 id="cvTitle">Course</h2>
+          <p id="cvDesc" style="color:var(--text-dim);"></p>
+        </div>
+      </div>
+      <div class="lesson-path" id="lessonPath"></div>
+    </div>
+  </div>
+
+  <!-- LESSON PLAYER -->
+  <div id="lessonPlayer" class="hidden">
+    <div class="player-top">
+      <div class="player-close" id="playerClose"></div>
+      <div class="player-track"><div class="player-track-fill" id="playerTrackFill" style="width:0%"></div></div>
+      <div class="player-hearts" id="playerHearts"></div>
+    </div>
+    <div class="player-body" id="playerBody"></div>
+    <div class="feedback-banner" id="feedbackBanner">
+      <div class="feedback-left">
+        <div class="feedback-icon ic" id="feedbackIcon" style="width:28px;height:28px;"></div>
+        <div class="feedback-text"><h4 id="feedbackTitle">Correct!</h4><p id="feedbackSub">Nice work.</p></div>
+      </div>
+      <button class="btn btn-primary player-nav-btn" id="feedbackContinue">Continue</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<!-- Firebase (compat SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDbIaPMZ4qnot5TOY96ZrJDP9eJvGj-q3w",
+  authDomain: "everythinglearn-36662.firebaseapp.com",
+  projectId: "everythinglearn-36662",
+  storageBucket: "everythinglearn-36662.firebasestorage.app",
+  messagingSenderId: "215856526803",
+  appId: "1:215856526803:web:b25023c12df9e2d0f8ab26",
+  measurementId: "G-W63KTTMSX1"
+};
+firebase.initializeApp(firebaseConfig);
+try{ firebase.analytics(); }catch(e){}
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let currentUser = null;
+
+/* ---------------- ICONS (no emoji, ever) ---------------- */
+const ICONS = {
+  logo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 3-3 3-3-3 3-3z"/><path d="M12 16l3 3-3 3-3-3 3-3z"/><path d="M5 9l3 3-3 3-3-3 3-3z" transform="translate(2 0)"/><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/></svg>',
+  flame: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.2 4-3.6 5.2-3.6 9.2a3.6 3.6 0 0 0 7.2 0c0-1.6-.8-2.4-.8-2.4s1.8.8 1.8 3.6a5 5 0 0 1-10 0C6.6 7.2 10.4 6 12 2z"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.7-4.9 4.5 1.3 6.5L12 16.9l-5.9 3.3 1.3-6.5-4.9-4.5 6.6-.7z"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.5s-7.5-4.7-10-9.4C.4 7.6 2.2 4 5.8 4c2 0 3.5 1 4.7 2.6C11.7 5 13.2 4 15.2 4c3.6 0 5.4 3.6 3.8 7.1-2.5 4.7-10 9.4-10 9.4z"/></svg>',
+  heartOutline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7.5-4.7-10-9.4C.4 7.6 2.2 4 5.8 4c2 0 3.5 1 4.7 2.6C11.7 5 13.2 4 15.2 4c3.6 0 5.4 3.6 3.8 7.1-2.5 4.7-10 9.4-10 9.4z"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+  cross: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 5H4v2a4 4 0 0 0 4 4M16 5h4v2a4 4 0 0 1-4 4"/><path d="M12 13v4M9 21h6M10 17h4v4h-4z"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5v-17z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/></svg>',
+  arrowLeft: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+  code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L3 12l6 6M15 6l6 6-6 6"/></svg>',
+  rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2.5c3 0 6 2 7 5-3 1-5 4-5 7l-6 6-3-3 6-6c0-3 2-5 5-7-3-1-6-1-4 5"/><path d="M9 15l-4 4M4.5 19.5L3 21l1.5-1.5z"/><circle cx="15" cy="9" r="1.4" fill="currentColor" stroke="none"/></svg>',
+  bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.1 2.2h5c0-.9.5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>',
+  puzzle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v2.5a1.8 1.8 0 0 1-3.6 0V3H3v5.5h2.5a1.8 1.8 0 0 1 0 3.6H3V17h5.4a1.8 1.8 0 0 1 3.6 0V21h5v-5.4a1.8 1.8 0 0 1 3.6 0H21V10h-2.4a1.8 1.8 0 0 1 0-3.6H21V3h-5v2.4a1.8 1.8 0 0 1-3.6 0V3H9z"/></svg>',
+  flask: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6M10 2v6.5L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 8.5V2"/><path d="M7.5 14h9"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.8 1.8 0 0 0 .36 2l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V19a2 2 0 1 1-4 0v-.08a1.8 1.8 0 0 0-1.18-1.65 1.8 1.8 0 0 0-2 .36l-.05.05A2 2 0 1 1 3.8 14.9l.05-.05a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H2.4a2 2 0 1 1 0-4h.08A1.8 1.8 0 0 0 4.13 6.6a1.8 1.8 0 0 0-.36-2l-.05-.05A2 2 0 1 1 6.55 1.7l.05.05a1.8 1.8 0 0 0 2 .36h.1a1.8 1.8 0 0 0 1.1-1.65V.4a2 2 0 1 1 4 0v.08a1.8 1.8 0 0 0 1.1 1.65h.1a1.8 1.8 0 0 0 2-.36l.05-.05A2 2 0 1 1 20.2 4.6l-.05.05a1.8 1.8 0 0 0-.36 2v.1a1.8 1.8 0 0 0 1.65 1.1h.16a2 2 0 1 1 0 4h-.08a1.8 1.8 0 0 0-1.65 1.1z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.2-6.4L21 4l-1 4.2c.6 1.1 1 2.4 1 3.8z"/></svg>',
+  confetti: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l3-9M9 21l2-8M14 20l1.5-5M4 4l3 3M11 3l1 3.5M17 5l2 2.5"/><circle cx="19" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="7" cy="9" r="1" fill="currentColor" stroke="none"/></svg>',
+  wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/></svg>'
+};
+function icon(name, size){
+  size = size || 18;
+  return `<span class="ic" style="width:${size}px;height:${size}px;">${ICONS[name] || ICONS.target}</span>`;
+}
+function fillStaticIcons(){
+  $('logoMark').innerHTML = ICONS.logo;
+  $('streakIcon').innerHTML = ICONS.flame;
+  $('xpIcon').innerHTML = ICONS.star;
+  $('allCoursesIcon').innerHTML = ICONS.book;
+  $('backIcon').innerHTML = ICONS.arrowLeft;
+  $('playerClose').innerHTML = ICONS.close;
+}
+document.addEventListener('DOMContentLoaded', fillStaticIcons);
+
+
+let isSignupMode = false;
+let coursesCache = [];
+let progressCache = {}; // courseId -> {completedLessons:[], xp}
+let userDocData = { xp:0, streak:0, lastActive:null, displayName:'' };
+
+let activeCourse = null;
+let activeLessons = [];
+let activeLesson = null;
+let activeSteps = [];
+let stepIndex = 0;
+let hearts = 3;
+let lessonXpEarned = 0;
+
+/* ---------------- helpers ---------------- */
+function $(id){ return document.getElementById(id); }
+function showToast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+function shuffle(arr){ return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]); }
+
+/* ---------------- AUTH ---------------- */
+$('authToggleLink').addEventListener('click', ()=>{
+  isSignupMode = !isSignupMode;
+  $('nameField').style.display = isSignupMode ? 'block' : 'none';
+  $('authSubmit').textContent = isSignupMode ? 'Sign Up' : 'Log In';
+  $('authSubtitle').textContent = isSignupMode ? 'Create your account and start learning.' : 'Welcome back! Log in to continue your streak.';
+  $('authToggle').innerHTML = isSignupMode
+    ? `Already have an account? <a id="authToggleLink2">Log in</a>`
+    : `Don't have an account? <a id="authToggleLink2">Sign up</a>`;
+  document.getElementById('authToggleLink2').addEventListener('click', ()=>$('authToggleLink').click());
+  $('authError').textContent='';
+});
+
+$('authSubmit').addEventListener('click', async ()=>{
+  const email = $('authEmail').value.trim();
+  const pass = $('authPassword').value;
+  const name = $('authName').value.trim();
+  $('authError').textContent = '';
+  if(!email || !pass){ $('authError').textContent = 'Please fill in email and password.'; return; }
+  $('authSubmit').textContent = 'Please wait...';
+  try{
+    if(isSignupMode){
+      const cred = await auth.createUserWithEmailAndPassword(email, pass);
+      await cred.user.updateProfile({displayName: name || email.split('@')[0]});
+      await db.collection('users').doc(cred.user.uid).set({
+        displayName: name || email.split('@')[0], xp:0, streak:0, lastActive: firebase.firestore.FieldValue.serverTimestamp(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      await auth.signInWithEmailAndPassword(email, pass);
+    }
+  }catch(err){
+    $('authError').textContent = friendlyAuthError(err);
+  }
+  $('authSubmit').textContent = isSignupMode ? 'Sign Up' : 'Log In';
+});
+
+function friendlyAuthError(err){
+  const map = {
+    'auth/email-already-in-use':'That email is already registered.',
+    'auth/invalid-email':'That email looks invalid.',
+    'auth/weak-password':'Password should be at least 6 characters.',
+    'auth/user-not-found':'No account with that email.',
+    'auth/wrong-password':'Incorrect password.',
+    'auth/invalid-credential':'Incorrect email or password.',
+  };
+  return map[err.code] || err.message;
+}
+
+$('logoutBtn').addEventListener('click', ()=> auth.signOut());
+
+auth.onAuthStateChanged(async (user)=>{
+  currentUser = user;
+  if(user){
+    $('authScreen').classList.add('hidden');
+    $('mainApp').classList.remove('hidden');
+    await loadUserDoc();
+    await bumpStreak();
+    await loadCourses();
+    await loadAllProgress();
+    renderDashboard();
+  } else {
+    $('mainApp').classList.add('hidden');
+    $('authScreen').classList.remove('hidden');
+  }
+});
+
+async function loadUserDoc(){
+  const ref = db.collection('users').doc(currentUser.uid);
+  const snap = await ref.get();
+  if(snap.exists){ userDocData = snap.data(); }
+  else{
+    userDocData = { displayName: currentUser.displayName || currentUser.email.split('@')[0], xp:0, streak:0, lastActive:null };
+    await ref.set(userDocData);
+  }
+  $('greeting').textContent = `Hey, ${userDocData.displayName || 'there'}`;
+}
+
+async function bumpStreak(){
+  const ref = db.collection('users').doc(currentUser.uid);
+  const today = new Date(); today.setHours(0,0,0,0);
+  let last = userDocData.lastActive && userDocData.lastActive.toDate ? userDocData.lastActive.toDate() : null;
+  let newStreak = userDocData.streak || 0;
+  if(last){
+    last.setHours(0,0,0,0);
+    const diffDays = Math.round((today - last)/86400000);
+    if(diffDays === 1) newStreak += 1;
+    else if(diffDays > 1) newStreak = 1;
+    // diffDays === 0 -> same day, keep streak
+  } else {
+    newStreak = 1;
+  }
+  userDocData.streak = newStreak;
+  userDocData.lastActive = firebase.firestore.Timestamp.now();
+  await ref.update({streak:newStreak, lastActive: firebase.firestore.FieldValue.serverTimestamp()});
+  $('streakCount').textContent = newStreak;
+}
+
+/* ---------------- DATA LOADING ---------------- */
+async function loadCourses(){
+  const snap = await db.collection('courses').orderBy('order','asc').get().catch(async ()=>{
+    return await db.collection('courses').get();
+  });
+  coursesCache = snap.docs.map(d=>({id:d.id, ...d.data()}));
+}
+
+async function loadAllProgress(){
+  const snap = await db.collection('users').doc(currentUser.uid).collection('progress').get();
+  progressCache = {};
+  snap.forEach(d=> progressCache[d.id] = d.data());
+}
+
+/* ---------------- DASHBOARD ---------------- */
+function renderDashboard(){
+  $('xpCount').textContent = userDocData.xp || 0;
+  $('streakCount').textContent = userDocData.streak || 0;
+  $('statXp').textContent = userDocData.xp || 0;
+  $('statStreak').textContent = userDocData.streak || 0;
+  $('statCourses').textContent = Object.keys(progressCache).length;
+  let totalLessonsDone = 0;
+  Object.values(progressCache).forEach(p => totalLessonsDone += (p.completedLessons||[]).length);
+  $('statLessons').textContent = totalLessonsDone;
+
+  const grid = $('courseGrid');
+  if(coursesCache.length === 0){
+    grid.innerHTML = `<div class="empty-state">No courses yet. Head to admin.html to add your first course.</div>`;
+    return;
+  }
+  grid.innerHTML = '';
+  coursesCache.forEach((c, i)=>{
+    const prog = progressCache[c.id];
+    const doneCount = prog ? (prog.completedLessons||[]).length : 0;
+    const total = c.lessonCount || 0;
+    const pct = total>0 ? Math.round((doneCount/total)*100) : 0;
+    const card = document.createElement('div');
+    card.className='course-card';
+    card.style.animationDelay = (i*0.06)+'s';
+    card.innerHTML = `
+      <div class="course-icon" style="background:${c.color||'linear-gradient(135deg,#7c5cff,#00d4ff)'}">${renderCourseIcon(c.icon, 26)}</div>
+      <h3>${escapeHtml(c.title||'Untitled')}</h3>
+      <p>${escapeHtml(c.description||'')}</p>
+      <div class="course-progress-bar"><div class="course-progress-fill" style="width:${pct}%"></div></div>
+      <div class="course-progress-txt">${doneCount}/${total||'?'} lessons · ${pct}%</div>
+    `;
+    card.addEventListener('click', ()=> openCourse(c));
+    grid.appendChild(card);
+  });
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div'); d.textContent = str||''; return d.innerHTML;
+}
+function renderCourseIcon(key, size){
+  size = size || 24;
+  if(key && ICONS[key]) return `<span class="ic" style="width:${size}px;height:${size}px;">${ICONS[key]}</span>`;
+  return `<span class="ic" style="width:${size}px;height:${size}px;">${ICONS.book}</span>`;
+}
+
+/* ---------------- COURSE VIEW ---------------- */
+async function openCourse(course){
+  activeCourse = course;
+  $('dashboard').classList.add('hidden');
+  $('courseView').classList.remove('hidden');
+  $('cvIcon').innerHTML = renderCourseIcon(course.icon, 30);
+  $('cvIcon').style.background = course.color||'linear-gradient(135deg,#7c5cff,#00d4ff)';
+  $('cvTitle').textContent = course.title;
+  $('cvDesc').textContent = course.description||'';
+  $('lessonPath').innerHTML = '<div class="spinner"></div>';
+
+  const snap = await db.collection('courses').doc(course.id).collection('lessons').orderBy('order','asc').get();
+  activeLessons = snap.docs.map(d=>({id:d.id, ...d.data()}));
+  renderLessonPath();
+}
+
+function renderLessonPath(){
+  const prog = progressCache[activeCourse.id] || {completedLessons:[]};
+  const done = prog.completedLessons || [];
+  const path = $('lessonPath');
+  if(activeLessons.length === 0){
+    path.innerHTML = `<div class="empty-state">No lessons in this course yet.</div>`;
+    return;
+  }
+  path.innerHTML = '';
+  activeLessons.forEach((lesson, i)=>{
+    const isDone = done.includes(lesson.id);
+    const isCurrent = !isDone && (i===0 || done.includes(activeLessons[i-1].id));
+    const isLocked = !isDone && !isCurrent;
+    const node = document.createElement('div');
+    node.className = `lesson-node ${isDone?'done':''} ${isCurrent?'current':''} ${isLocked?'locked':''}`;
+    node.style.animationDelay = (i*0.05)+'s';
+    node.innerHTML = `
+      <div class="lesson-bullet">${isDone?icon('check',16):(isLocked?icon('lock',15):(i+1))}</div>
+      <div class="lesson-info">
+        <h4>${escapeHtml(lesson.title)}</h4>
+        <span>${(lesson.steps||[]).length} steps ${isDone?'· Completed':''}</span>
+      </div>
+    `;
+    if(!isLocked){
+      node.addEventListener('click', ()=> startLesson(lesson));
+    }
+    path.appendChild(node);
+  });
+}
+
+$('backToDash').addEventListener('click', ()=>{
+  $('courseView').classList.add('hidden');
+  $('dashboard').classList.remove('hidden');
+  renderDashboard();
+});
+
+/* ---------------- LESSON PLAYER ---------------- */
+let savedScrollY = 0;
+function lockBodyScroll(){
+  savedScrollY = window.scrollY || window.pageYOffset || 0;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+  document.documentElement.classList.add('locked');
+}
+function unlockBodyScroll(){
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  document.documentElement.classList.remove('locked');
+  window.scrollTo(0, savedScrollY);
+}
+
+function startLesson(lesson){
+  activeLesson = lesson;
+  activeSteps = lesson.steps || [];
+  stepIndex = 0;
+  hearts = 3;
+  lessonXpEarned = 0;
+  $('lessonPlayer').classList.remove('hidden');
+  lockBodyScroll();
+  updateHearts();
+  renderStep();
+}
+
+$('playerClose').addEventListener('click', ()=>{
+  $('lessonPlayer').classList.add('hidden');
+  unlockBodyScroll();
+  hideFeedback();
+});
+
+function updateHearts(){
+  let html = '';
+  for(let i=0;i<3;i++){
+    html += `<span class="ic" style="width:18px;height:18px;color:${i<hearts?'var(--red)':'rgba(255,255,255,0.25)'}">${i<hearts?ICONS.heart:ICONS.heartOutline}</span>`;
+  }
+  $('playerHearts').innerHTML = html;
+}
+
+function updateTrack(){
+  const pct = Math.round((stepIndex/activeSteps.length)*100);
+  $('playerTrackFill').style.width = pct+'%';
+}
+
+function renderStep(){
+  try{
+    renderStepInner();
+  }catch(err){
+    console.error('Step render failed:', err);
+    $('playerBody').innerHTML = `
+      <div class="step-card">
+        <span class="step-tag">Something went wrong</span>
+        <h2>This step couldn't load</h2>
+        <p class="body-text">There was a problem showing this exercise. You can skip it and keep going.</p>
+        <button class="btn btn-primary player-nav-btn" style="margin-top:20px;" id="skipBrokenStep">Skip this step</button>
+      </div>`;
+    $('skipBrokenStep').addEventListener('click', nextStep);
+  }
+}
+
+function renderStepInner(){
+  hideFeedback();
+  updateTrack();
+  const body = $('playerBody');
+  if(stepIndex >= activeSteps.length){
+    renderComplete();
+    return;
+  }
+  const step = activeSteps[stepIndex];
+  const type = step.type || 'content';
+  let html = '';
+  if(type === 'content'){
+    html = `
+      <div class="step-card">
+        <span class="step-tag">Lesson</span>
+        ${step.emoji ? `<div class="step-emoji">${renderCourseIcon(step.emoji, 56)}</div>` : ''}
+        <h2>${escapeHtml(step.title||'')}</h2>
+        <p class="body-text">${escapeHtml(step.body||'')}</p>
+      </div>`;
+    body.innerHTML = html;
+    body.querySelectorAll('.step-card').forEach(c=>{
+      const btn = document.createElement('button');
+      btn.className='btn btn-primary player-nav-btn';
+      btn.style.marginTop='24px';
+      btn.textContent='Continue';
+      btn.addEventListener('click', nextStep);
+      c.appendChild(btn);
+    });
+  } else if(type === 'mcq'){
+    const opts = step.options || [];
+    if(opts.length < 2) throw new Error('MCQ step has fewer than 2 options');
+    html = `
+      <div class="step-card">
+        <span class="step-tag">Quick Check</span>
+        <h2>${escapeHtml(step.question||'')}</h2>
+        <div class="options" id="mcqOptions"></div>
+      </div>`;
+    body.innerHTML = html;
+    const optsWrap = $('mcqOptions');
+    const letters = ['A','B','C','D','E','F'];
+    opts.forEach((opt, i)=>{
+      const el = document.createElement('div');
+      el.className='option';
+      el.innerHTML = `<div class="option-letter">${letters[i]}</div><div>${escapeHtml(opt)}</div>`;
+      el.addEventListener('click', ()=> answerMcq(i, step, el, optsWrap));
+      optsWrap.appendChild(el);
+    });
+  } else if(type === 'fillblank'){
+    html = `
+      <div class="step-card">
+        <span class="step-tag">Fill in the blank</span>
+        <h2>${escapeHtml(step.question||'')}</h2>
+        <input type="text" class="fill-input" id="fillInput" placeholder="Type your answer...">
+        <button class="btn btn-primary player-nav-btn" style="margin-top:18px;" id="fillSubmit">Check</button>
+      </div>`;
+    body.innerHTML = html;
+    $('fillSubmit').addEventListener('click', ()=> answerFill(step));
+    $('fillInput').addEventListener('keydown', e=>{ if(e.key==='Enter') answerFill(step); });
+  } else if(type === 'code'){
+    html = `
+      <div class="step-card">
+        <span class="step-tag">Code Challenge</span>
+        <h2>${escapeHtml(step.prompt||'')}</h2>
+        <div class="code-box">
+          <div class="code-head"><div class="code-dot" style="background:#ff5f56"></div><div class="code-dot" style="background:#ffbd2e"></div><div class="code-dot" style="background:#27c93f"></div></div>
+          <textarea id="codeInput" spellcheck="false">${escapeHtml(step.starterCode||'// write your code here\n')}</textarea>
+          <div class="code-output" id="codeOutput" style="display:none;"></div>
+        </div>
+        <button class="btn btn-primary player-nav-btn" style="margin-top:18px;" id="runCode">Run Code</button>
+      </div>`;
+    body.innerHTML = html;
+    $('runCode').addEventListener('click', ()=> runCodeStep(step));
+  }
+}
+
+function answerMcq(i, step, el, wrap){
+  if(wrap.dataset.answered) return;
+  wrap.dataset.answered = '1';
+  const correctIdx = step.correctIndex;
+  wrap.querySelectorAll('.option').forEach((o,idx)=>{
+    if(idx===correctIdx) o.classList.add('correct');
+    else if(idx===i) o.classList.add('wrong');
+  });
+  const isCorrect = i === correctIdx;
+  showFeedback(isCorrect, step.explanation);
+}
+
+function answerFill(step){
+  const input = $('fillInput');
+  const val = input.value.trim().toLowerCase();
+  const accepted = (step.answers||[step.answer||'']).map(a=>String(a).trim().toLowerCase());
+  const isCorrect = accepted.includes(val);
+  input.classList.add(isCorrect?'correct':'wrong');
+  input.disabled = true;
+  showFeedback(isCorrect, step.explanation || (isCorrect? '' : `Correct answer: ${step.answers?step.answers[0]:step.answer}`));
+}
+
+let codeRunLogs = [];
+let codeRunTimeout = null;
+let codeRunStep = null;
+
+function runCodeStep(step){
+  const code = $('codeInput').value;
+  const out = $('codeOutput');
+  out.style.display='block';
+  out.textContent = 'Running...';
+  out.className = 'code-output';
+  codeRunLogs = [];
+  codeRunStep = step;
+
+  // fresh sandboxed iframe every run so state never leaks between runs
+  const oldFrame = document.getElementById('codeSandboxFrame');
+  if(oldFrame) oldFrame.remove();
+  const iframe = document.createElement('iframe');
+  iframe.id = 'codeSandboxFrame';
+  iframe.sandbox = 'allow-scripts'; // no allow-same-origin -> isolated origin, can't touch parent DOM
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  const escapedCode = code.replace(/<\/script/gi, '<\\/script');
+  const sandboxHtml = `<!DOCTYPE html><html><body><script>
+    window.console = {
+      log: function(){ var a=Array.prototype.slice.call(arguments).map(function(x){return (typeof x==='object')?JSON.stringify(x):String(x);}).join(' '); parent.postMessage({__codesandbox:true,type:'log',payload:a}, '*'); },
+      error: function(){ var a=Array.prototype.slice.call(arguments).join(' '); parent.postMessage({__codesandbox:true,type:'log',payload:'Error: '+a}, '*'); },
+      warn: function(){ var a=Array.prototype.slice.call(arguments).join(' '); parent.postMessage({__codesandbox:true,type:'log',payload:a}, '*'); }
+    };
+    // document.write and navigation are neutralized inside this isolated sandbox origin
+    document.write = function(){ parent.postMessage({__codesandbox:true,type:'log',payload:'(document.write is disabled in this sandbox)'}, '*'); };
+    window.alert = function(msg){ parent.postMessage({__codesandbox:true,type:'log',payload:'alert: '+msg}, '*'); };
+    try {
+      ${escapedCode}
+      parent.postMessage({__codesandbox:true,type:'done'}, '*');
+    } catch(e) {
+      parent.postMessage({__codesandbox:true,type:'error',payload:e.message}, '*');
+    }
+  <\/script></body></html>`;
+  iframe.srcdoc = sandboxHtml;
+
+  clearTimeout(codeRunTimeout);
+  codeRunTimeout = setTimeout(()=>{
+    finishCodeRun(step, false, 'Timed out — check for infinite loops.');
+  }, 3000);
+}
+
+window.addEventListener('message', (e)=>{
+  const msg = e.data;
+  if(!msg || !msg.__codesandbox) return;
+  const iframe = document.getElementById('codeSandboxFrame');
+  if(!iframe || e.source !== iframe.contentWindow) return;
+  if(msg.type === 'log') codeRunLogs.push(msg.payload);
+  else if(msg.type === 'done'){ clearTimeout(codeRunTimeout); finishCodeRun(codeRunStep, true); }
+  else if(msg.type === 'error'){ clearTimeout(codeRunTimeout); finishCodeRun(codeRunStep, false, 'Error: ' + msg.payload); }
+});
+
+function finishCodeRun(step, success, errMsg){
+  const out = $('codeOutput');
+  if(!success){
+    out.textContent = errMsg || 'Error running code.';
+    out.className = 'code-output err';
+    showFeedback(false, 'Fix the error and try again.');
+    return;
+  }
+  const output = codeRunLogs.join('\n');
+  const expected = (step.expectedOutput||'').trim();
+  const isCorrect = expected ? output.trim() === expected : true;
+  out.textContent = output || '(no output)';
+  out.className = 'code-output ' + (isCorrect?'ok':'err');
+  showFeedback(isCorrect, isCorrect ? 'Your code ran successfully.' : `Expected output:\n${expected}`);
+}
+
+function showFeedback(isCorrect, sub){
+  const banner = $('feedbackBanner');
+  banner.className = 'feedback-banner show ' + (isCorrect?'correct':'wrong');
+  $('feedbackIcon').style.color = isCorrect ? 'var(--green)' : 'var(--red)';
+  $('feedbackIcon').innerHTML = isCorrect ? ICONS.check : ICONS.cross;
+  $('feedbackTitle').textContent = isCorrect ? 'Correct!' : 'Not quite';
+  $('feedbackSub').textContent = sub || (isCorrect? 'Great job, keep going.' : 'Review and try the next one.');
+  if(isCorrect){ lessonXpEarned += 10; }
+  else{
+    hearts = Math.max(0, hearts-1);
+    updateHearts();
+  }
+}
+function hideFeedback(){
+  $('feedbackBanner').className = 'feedback-banner';
+}
+$('feedbackContinue').addEventListener('click', nextStep);
+
+function nextStep(){
+  hideFeedback();
+  stepIndex++;
+  renderStep();
+}
+
+function renderComplete(){
+  updateTrack();
+  $('playerBody').innerHTML = `
+    <div class="step-card complete-screen">
+      <div class="big-emoji" style="display:flex;justify-content:center;color:var(--yellow);">${icon('trophy',64)}</div>
+      <h2>Lesson complete!</h2>
+      <div class="xp-gain">+${lessonXpEarned || 10} XP</div>
+      <br>
+      <button class="btn btn-primary player-nav-btn" id="finishLessonBtn">Awesome, continue</button>
+    </div>`;
+  launchConfetti();
+  $('finishLessonBtn').addEventListener('click', finishLesson);
+}
+
+function launchConfetti(){
+  const colors = ['#7c5cff','#00d4ff','#ff5c8a','#ffcf4d','#2ecc71'];
+  for(let i=0;i<60;i++){
+    const c = document.createElement('div');
+    c.className='confetti';
+    c.style.left = Math.random()*100+'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = (2+Math.random()*2)+'s';
+    c.style.borderRadius = Math.random()>0.5 ? '50%':'2px';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 4200);
+  }
+}
+
+async function finishLesson(){
+  const xpGain = lessonXpEarned || 10;
+  const courseId = activeCourse.id;
+  const ref = db.collection('users').doc(currentUser.uid).collection('progress').doc(courseId);
+  const existing = progressCache[courseId] || {completedLessons:[], xp:0};
+  const completed = new Set(existing.completedLessons||[]);
+  completed.add(activeLesson.id);
+  const newProg = { completedLessons: Array.from(completed), xp: (existing.xp||0) + xpGain, updatedAt: firebase.firestore.FieldValue.serverTimestamp() };
+  await ref.set(newProg, {merge:true});
+  progressCache[courseId] = newProg;
+
+  userDocData.xp = (userDocData.xp||0) + xpGain;
+  await db.collection('users').doc(currentUser.uid).update({xp: userDocData.xp});
+
+  $('lessonPlayer').classList.add('hidden');
+  unlockBodyScroll();
+  showToast(`+${xpGain} XP earned!`);
+  renderLessonPath();
+  renderDashboard();
+}
+</script>
+</body>
+</html>
