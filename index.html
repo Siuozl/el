@@ -556,6 +556,26 @@ $('backToDash').addEventListener('click', ()=>{
 });
 
 /* ---------------- LESSON PLAYER ---------------- */
+let savedScrollY = 0;
+function lockBodyScroll(){
+  savedScrollY = window.scrollY || window.pageYOffset || 0;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+  document.documentElement.classList.add('locked');
+}
+function unlockBodyScroll(){
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  document.documentElement.classList.remove('locked');
+  window.scrollTo(0, savedScrollY);
+}
+
 function startLesson(lesson){
   activeLesson = lesson;
   activeSteps = lesson.steps || [];
@@ -563,17 +583,14 @@ function startLesson(lesson){
   hearts = 3;
   lessonXpEarned = 0;
   $('lessonPlayer').classList.remove('hidden');
-  document.documentElement.classList.add('locked');
-  document.body.classList.add('locked');
-  window.scrollTo(0,0);
+  lockBodyScroll();
   updateHearts();
   renderStep();
 }
 
 $('playerClose').addEventListener('click', ()=>{
   $('lessonPlayer').classList.add('hidden');
-  document.documentElement.classList.remove('locked');
-  document.body.classList.remove('locked');
+  unlockBodyScroll();
   hideFeedback();
 });
 
@@ -843,8 +860,7 @@ async function finishLesson(){
   await db.collection('users').doc(currentUser.uid).update({xp: userDocData.xp});
 
   $('lessonPlayer').classList.add('hidden');
-  document.documentElement.classList.remove('locked');
-  document.body.classList.remove('locked');
+  unlockBodyScroll();
   showToast(`+${xpGain} XP earned!`);
   renderLessonPath();
   renderDashboard();
