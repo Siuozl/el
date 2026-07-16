@@ -117,6 +117,9 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-tem
       <div id="courseList"></div>
       <div class="divider"></div>
       <button class="btn btn-primary" style="width:100%;" id="newCourseBtn">+ New Course</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;" id="importCourseBtn">⬆ Import course (JSON)</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;" id="downloadTemplateBtn">⬇ Download template</button>
+      <input type="file" id="importFileInput" accept="application/json" class="hidden">
     </div>
 
     <div class="panel" id="workspace">
@@ -186,6 +189,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+const ADMIN_EMAIL = 'siuozl@hotmail.com';
+
 function $(id){ return document.getElementById(id); }
 function showToast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
 function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
@@ -207,7 +212,11 @@ $('authSubmit').addEventListener('click', async ()=>{
   $('authError').textContent='';
   if(!email||!pass){ $('authError').textContent='Enter email and password.'; return; }
   try{
-    await auth.signInWithEmailAndPassword(email, pass);
+    const cred = await auth.signInWithEmailAndPassword(email, pass);
+    if(cred.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+      await auth.signOut();
+      $('authError').textContent = 'This account is not authorized for admin access.';
+    }
   }catch(err){
     $('authError').textContent = err.message;
   }
@@ -215,13 +224,18 @@ $('authSubmit').addEventListener('click', async ()=>{
 $('logoutBtn').addEventListener('click', ()=> auth.signOut());
 
 auth.onAuthStateChanged(user=>{
-  if(user){
+  if(user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
     $('authScreen').classList.add('hidden');
     $('mainApp').classList.remove('hidden');
     loadCourses();
   } else {
     $('mainApp').classList.add('hidden');
     $('authScreen').classList.remove('hidden');
+    if(user){
+      // logged in but not the admin account
+      auth.signOut();
+      $('authError').textContent = 'This account is not authorized for admin access.';
+    }
   }
 });
 
@@ -264,6 +278,7 @@ function renderWorkspace(course){
     <div class="course-detail-head">
       <h2>${course.icon||'📘'} ${escapeHtml(course.title)}</h2>
       <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-sm" id="exportCourseBtn">⬇ Export JSON</button>
         <button class="btn btn-ghost btn-sm" id="editCourseBtn">Edit course</button>
         <button class="btn btn-danger btn-sm" id="deleteCourseBtn">Delete course</button>
       </div>
@@ -297,6 +312,19 @@ function renderWorkspace(course){
   $('editCourseBtn').addEventListener('click', ()=> openCourseModal(course));
   $('deleteCourseBtn').addEventListener('click', ()=> deleteCourse(course));
   $('addLessonBtn').addEventListener('click', ()=> openLessonModal(null));
+  $('exportCourseBtn').addEventListener('click', ()=>{
+    const exportData = {
+      title: course.title, description: course.description||'', icon: course.icon||'📘',
+      color: course.color||COLORS[0], order: course.order||0,
+      lessons: activeLessons.map(l=>({ title: l.title, order: l.order, steps: l.steps||[] }))
+    };
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `${course.title.replace(/\s+/g,'-').toLowerCase()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 }
 
 /* ---------------- COURSE MODAL ---------------- */
@@ -333,17 +361,25 @@ $('courseModalSave').addEventListener('click', async ()=>{
     title, description: $('cDesc').value.trim(), icon: $('cIcon').value.trim()||'📘',
     color: selectedColor, order: Number($('cOrder').value)||0
   };
-  if(editingCourseId){
-    await db.collection('courses').doc(editingCourseId).update(data);
-    showToast('Course updated');
-  } else {
-    const ref = await db.collection('courses').add({...data, lessonCount:0, createdAt: firebase.firestore.FieldValue.serverTimestamp()});
-    showToast('Course created');
-    activeCourseId = ref.id;
+  const saveBtn = $('courseModalSave');
+  saveBtn.textContent = 'Saving...'; saveBtn.disabled = true;
+  try{
+    if(editingCourseId){
+      await db.collection('courses').doc(editingCourseId).update(data);
+      showToast('Course updated');
+    } else {
+      const ref = await db.collection('courses').add({...data, lessonCount:0, createdAt: firebase.firestore.FieldValue.serverTimestamp()});
+      showToast('Course created');
+      activeCourseId = ref.id;
+    }
+    $('courseModal').classList.add('hidden');
+    await loadCourses();
+    if(activeCourseId) selectCourse(activeCourseId);
+  }catch(err){
+    console.error(err);
+    alert('Save failed: ' + err.message + '\n\nThis usually means your Firestore security rules are blocking the write. Check the rules section in the setup notes.');
   }
-  $('courseModal').classList.add('hidden');
-  await loadCourses();
-  if(activeCourseId) selectCourse(activeCourseId);
+  saveBtn.textContent = 'Save Course'; saveBtn.disabled = false;
 });
 
 async function deleteCourse(course){
@@ -392,7 +428,12 @@ function renderStepsDraft(){
   stepsDraft.forEach((step, idx)=>{
     const el = document.createElement('div');
     el.className='step-item';
-    let inner = `<span class="step-type-badge">${step.type}</span><div class="remove-step" data-remove="${idx}">✕ remove</div>`;
+    let inner = `<span class="step-type-badge">${step.type}</span>
+      <div class="remove-step" data-remove="${idx}">✕ remove</div>
+      <div style="position:absolute;top:12px;right:80px;display:flex;gap:6px;">
+        <span style="cursor:pointer;color:var(--text-dim);${idx===0?'opacity:0.3;pointer-events:none;':''}" data-moveup="${idx}">↑</span>
+        <span style="cursor:pointer;color:var(--text-dim);${idx===stepsDraft.length-1?'opacity:0.3;pointer-events:none;':''}" data-movedown="${idx}">↓</span>
+      </div>`;
     if(step.type==='content'){
       inner += `
         <div class="field"><label>Emoji (optional)</label><input type="text" maxlength="4" data-field="emoji" data-idx="${idx}" value="${escapeHtml(step.emoji)}"></div>
@@ -425,6 +466,12 @@ function renderStepsDraft(){
   });
 
   wrap.querySelectorAll('[data-remove]').forEach(b=> b.addEventListener('click', ()=>{ stepsDraft.splice(Number(b.dataset.remove),1); renderStepsDraft(); }));
+  wrap.querySelectorAll('[data-moveup]').forEach(b=> b.addEventListener('click', ()=>{
+    const i = Number(b.dataset.moveup); if(i>0){ [stepsDraft[i-1],stepsDraft[i]]=[stepsDraft[i],stepsDraft[i-1]]; renderStepsDraft(); }
+  }));
+  wrap.querySelectorAll('[data-movedown]').forEach(b=> b.addEventListener('click', ()=>{
+    const i = Number(b.dataset.movedown); if(i<stepsDraft.length-1){ [stepsDraft[i+1],stepsDraft[i]]=[stepsDraft[i],stepsDraft[i+1]]; renderStepsDraft(); }
+  }));
   wrap.querySelectorAll('[data-field]').forEach(inp=> inp.addEventListener('input', ()=>{
     const idx = Number(inp.dataset.idx); const field = inp.dataset.field;
     if(field==='answersCsv'){ stepsDraft[idx].answers = inp.value.split(',').map(s=>s.trim()).filter(Boolean); }
@@ -449,30 +496,136 @@ $('lessonModalSave').addEventListener('click', async ()=>{
   if(!title){ showToast('Lesson title required'); return; }
   const data = { title, order: Number($('lOrder').value)||0, steps: stepsDraft, updatedAt: firebase.firestore.FieldValue.serverTimestamp() };
   const courseRef = db.collection('courses').doc(activeCourseId);
-  if(editingLessonId){
-    await courseRef.collection('lessons').doc(editingLessonId).update(data);
-    showToast('Lesson updated');
-  } else {
-    await courseRef.collection('lessons').add({...data, createdAt: firebase.firestore.FieldValue.serverTimestamp()});
-    showToast('Lesson created');
+  const saveBtn = $('lessonModalSave');
+  saveBtn.textContent = 'Saving...'; saveBtn.disabled = true;
+  try{
+    if(editingLessonId){
+      await courseRef.collection('lessons').doc(editingLessonId).update(data);
+      showToast('Lesson updated');
+    } else {
+      await courseRef.collection('lessons').add({...data, createdAt: firebase.firestore.FieldValue.serverTimestamp()});
+      showToast('Lesson created');
+    }
+    const lessonsSnap = await courseRef.collection('lessons').get();
+    await courseRef.update({lessonCount: lessonsSnap.size});
+    $('lessonModal').classList.add('hidden');
+    await loadCourses();
+    selectCourse(activeCourseId);
+  }catch(err){
+    console.error(err);
+    alert('Save failed: ' + err.message + '\n\nThis usually means your Firestore security rules are blocking the write. Check the rules section in the setup notes.');
   }
-  const lessonsSnap = await courseRef.collection('lessons').get();
-  await courseRef.update({lessonCount: lessonsSnap.size});
-  $('lessonModal').classList.add('hidden');
-  await loadCourses();
-  selectCourse(activeCourseId);
+  saveBtn.textContent = 'Save Lesson'; saveBtn.disabled = false;
 });
 
 async function deleteLesson(lessonId){
   if(!confirm('Delete this lesson?')) return;
-  const courseRef = db.collection('courses').doc(activeCourseId);
-  await courseRef.collection('lessons').doc(lessonId).delete();
-  const lessonsSnap = await courseRef.collection('lessons').get();
-  await courseRef.update({lessonCount: lessonsSnap.size});
-  showToast('Lesson deleted');
-  await loadCourses();
-  selectCourse(activeCourseId);
+  try{
+    const courseRef = db.collection('courses').doc(activeCourseId);
+    await courseRef.collection('lessons').doc(lessonId).delete();
+    const lessonsSnap = await courseRef.collection('lessons').get();
+    await courseRef.update({lessonCount: lessonsSnap.size});
+    showToast('Lesson deleted');
+    await loadCourses();
+    selectCourse(activeCourseId);
+  }catch(err){
+    alert('Delete failed: ' + err.message);
+  }
 }
+
+/* ---------------- BATCH JSON IMPORT ---------------- */
+const TEMPLATE = {
+  title: "Intro to Python",
+  description: "Learn the basics of Python programming from scratch.",
+  icon: "🐍",
+  color: "linear-gradient(135deg,#7c5cff,#00d4ff)",
+  order: 0,
+  lessons: [
+    {
+      title: "Variables & Data Types",
+      order: 0,
+      steps: [
+        { type: "content", emoji: "🐍", title: "What is a variable?", body: "A variable is a named container that stores a value. In Python you create one just by assigning a value, like x = 5." },
+        { type: "mcq", question: "Which line correctly creates a variable named age with value 10?", options: ["age = 10", "var age = 10", "int age = 10", "10 = age"], correctIndex: 0, explanation: "Python doesn't need type declarations — just name = value." },
+        { type: "fillblank", question: "Fill in the blank: name ____ 'Ada' creates a string variable.", answers: ["=", "= "], explanation: "The equals sign assigns the value to the variable." },
+        { type: "code", prompt: "Create a variable called message with the value 'Hello World' and print it.", starterCode: "let message = '';\nconsole.log(message);", expectedOutput: "Hello World" }
+      ]
+    },
+    {
+      title: "Loops",
+      order: 1,
+      steps: [
+        { type: "content", emoji: "🔁", title: "For loops", body: "A for loop repeats a block of code a set number of times." },
+        { type: "mcq", question: "How many times does this loop run: for i in range(5)?", options: ["4", "5", "6", "Infinite"], correctIndex: 1, explanation: "range(5) produces 0,1,2,3,4 — five values." }
+      ]
+    }
+  ]
+};
+
+$('downloadTemplateBtn').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(TEMPLATE, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'everythinglearn-course-template.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('importCourseBtn').addEventListener('click', ()=> $('importFileInput').click());
+
+$('importFileInput').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  e.target.value = '';
+  let data;
+  try{
+    const text = await file.text();
+    data = JSON.parse(text);
+  }catch(err){
+    alert('That file is not valid JSON: ' + err.message);
+    return;
+  }
+  if(!data.title || !Array.isArray(data.lessons)){
+    alert('Invalid course file. It needs at least a "title" and a "lessons" array. Download the template to see the expected format.');
+    return;
+  }
+  if(!confirm(`Import "${data.title}" with ${data.lessons.length} lesson(s)? This creates a brand new course.`)) return;
+
+  showToast('Importing course...');
+  try{
+    const courseData = {
+      title: data.title,
+      description: data.description || '',
+      icon: data.icon || '📘',
+      color: data.color || COLORS[0],
+      order: Number(data.order) || courses.length,
+      lessonCount: data.lessons.length,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    const courseRef = await db.collection('courses').add(courseData);
+
+    // Batch-write lessons. Firestore batches cap at 500 ops; fine for course-scale imports.
+    const batch = db.batch();
+    data.lessons.forEach((lesson, i)=>{
+      const lessonRef = courseRef.collection('lessons').doc();
+      batch.set(lessonRef, {
+        title: lesson.title || `Lesson ${i+1}`,
+        order: Number(lesson.order) != null ? Number(lesson.order) : i,
+        steps: Array.isArray(lesson.steps) ? lesson.steps : [],
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+    await batch.commit();
+
+    showToast(`Imported "${data.title}" with ${data.lessons.length} lessons! 🎉`);
+    activeCourseId = courseRef.id;
+    await loadCourses();
+    selectCourse(activeCourseId);
+  }catch(err){
+    console.error(err);
+    alert('Import failed: ' + err.message + '\n\nThis is usually a Firestore security rules issue.');
+  }
+});
 </script>
 </body>
 </html>
