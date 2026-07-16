@@ -628,26 +628,77 @@ function answerFill(step){
   showFeedback(isCorrect, step.explanation || (isCorrect? '' : `Correct answer: ${step.answers?step.answers[0]:step.answer}`));
 }
 
+let codeRunLogs = [];
+let codeRunTimeout = null;
+let codeRunStep = null;
+
 function runCodeStep(step){
   const code = $('codeInput').value;
   const out = $('codeOutput');
   out.style.display='block';
-  let logs = [];
-  const fakeConsole = { log: (...args)=> logs.push(args.map(a=> typeof a==='object'? JSON.stringify(a):String(a)).join(' ')) };
-  try{
-    const fn = new Function('console', code);
-    fn(fakeConsole);
-    const output = logs.join('\n');
-    const expected = (step.expectedOutput||'').trim();
-    const isCorrect = expected ? output.trim() === expected : true;
-    out.textContent = output || '(no output)';
-    out.className = 'code-output ' + (isCorrect?'ok':'err');
-    showFeedback(isCorrect, isCorrect ? 'Your code ran successfully.' : `Expected output:\n${expected}`);
-  }catch(err){
-    out.textContent = 'Error: ' + err.message;
+  out.textContent = 'Running...';
+  out.className = 'code-output';
+  codeRunLogs = [];
+  codeRunStep = step;
+
+  // fresh sandboxed iframe every run so state never leaks between runs
+  const oldFrame = document.getElementById('codeSandboxFrame');
+  if(oldFrame) oldFrame.remove();
+  const iframe = document.createElement('iframe');
+  iframe.id = 'codeSandboxFrame';
+  iframe.sandbox = 'allow-scripts'; // no allow-same-origin -> isolated origin, can't touch parent DOM
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  const escapedCode = code.replace(/<\/script/gi, '<\\/script');
+  const sandboxHtml = `<!DOCTYPE html><html><body><script>
+    window.console = {
+      log: function(){ var a=Array.prototype.slice.call(arguments).map(function(x){return (typeof x==='object')?JSON.stringify(x):String(x);}).join(' '); parent.postMessage({__codesandbox:true,type:'log',payload:a}, '*'); },
+      error: function(){ var a=Array.prototype.slice.call(arguments).join(' '); parent.postMessage({__codesandbox:true,type:'log',payload:'Error: '+a}, '*'); },
+      warn: function(){ var a=Array.prototype.slice.call(arguments).join(' '); parent.postMessage({__codesandbox:true,type:'log',payload:a}, '*'); }
+    };
+    // document.write and navigation are neutralized inside this isolated sandbox origin
+    document.write = function(){ parent.postMessage({__codesandbox:true,type:'log',payload:'(document.write is disabled in this sandbox)'}, '*'); };
+    window.alert = function(msg){ parent.postMessage({__codesandbox:true,type:'log',payload:'alert: '+msg}, '*'); };
+    try {
+      ${escapedCode}
+      parent.postMessage({__codesandbox:true,type:'done'}, '*');
+    } catch(e) {
+      parent.postMessage({__codesandbox:true,type:'error',payload:e.message}, '*');
+    }
+  <\/script></body></html>`;
+  iframe.srcdoc = sandboxHtml;
+
+  clearTimeout(codeRunTimeout);
+  codeRunTimeout = setTimeout(()=>{
+    finishCodeRun(step, false, 'Timed out — check for infinite loops.');
+  }, 3000);
+}
+
+window.addEventListener('message', (e)=>{
+  const msg = e.data;
+  if(!msg || !msg.__codesandbox) return;
+  const iframe = document.getElementById('codeSandboxFrame');
+  if(!iframe || e.source !== iframe.contentWindow) return;
+  if(msg.type === 'log') codeRunLogs.push(msg.payload);
+  else if(msg.type === 'done'){ clearTimeout(codeRunTimeout); finishCodeRun(codeRunStep, true); }
+  else if(msg.type === 'error'){ clearTimeout(codeRunTimeout); finishCodeRun(codeRunStep, false, 'Error: ' + msg.payload); }
+});
+
+function finishCodeRun(step, success, errMsg){
+  const out = $('codeOutput');
+  if(!success){
+    out.textContent = errMsg || 'Error running code.';
     out.className = 'code-output err';
     showFeedback(false, 'Fix the error and try again.');
+    return;
   }
+  const output = codeRunLogs.join('\n');
+  const expected = (step.expectedOutput||'').trim();
+  const isCorrect = expected ? output.trim() === expected : true;
+  out.textContent = output || '(no output)';
+  out.className = 'code-output ' + (isCorrect?'ok':'err');
+  showFeedback(isCorrect, isCorrect ? 'Your code ran successfully.' : `Expected output:\n${expected}`);
 }
 
 function showFeedback(isCorrect, sub){
