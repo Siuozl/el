@@ -14,6 +14,8 @@
   --text:#f4f4fb; --text-dim:#a9a6c8; --radius:16px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;vertical-align:-3px;}
+.ic svg{width:100%;height:100%;display:block;}
 body{font-family:'Inter',sans-serif;color:var(--text);background:linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),#1b1836);background-size:400% 400%;animation:gradientShift 20s ease infinite;min-height:100vh;}
 @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 h1,h2,h3{font-family:'Poppins',sans-serif;}
@@ -94,7 +96,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-tem
 <!-- AUTH -->
 <div id="authScreen">
   <div class="auth-card">
-    <h1>🛠 EverythingLearn Admin</h1>
+    <h1><span class="ic" id="authGearIcon" style="width:20px;height:20px;"></span> EverythingLearn Admin</h1>
     <p class="auth-sub">Sign in with your admin account to manage content.</p>
     <div class="auth-error" id="authError"></div>
     <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="admin@example.com"></div>
@@ -107,7 +109,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-tem
 <!-- APP -->
 <div id="mainApp" class="hidden">
   <nav>
-    <div class="logo">🛠 EverythingLearn <span style="color:var(--text-dim);font-weight:400;">/ admin</span></div>
+    <div class="logo"><span class="ic" id="navGearIcon" style="width:18px;height:18px;"></span> EverythingLearn <span style="color:var(--text-dim);font-weight:400;">/ admin</span></div>
     <button class="btn btn-ghost" id="logoutBtn">Log out</button>
   </nav>
 
@@ -117,8 +119,8 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-tem
       <div id="courseList"></div>
       <div class="divider"></div>
       <button class="btn btn-primary" style="width:100%;" id="newCourseBtn">+ New Course</button>
-      <button class="btn btn-ghost" style="width:100%;margin-top:8px;" id="importCourseBtn">⬆ Import course (JSON)</button>
-      <button class="btn btn-ghost" style="width:100%;margin-top:8px;" id="downloadTemplateBtn">⬇ Download template</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;" id="importCourseBtn"><span class="ic" id="importIcon" style="width:14px;height:14px;"></span> Import course (JSON)</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;" id="downloadTemplateBtn"><span class="ic" id="templateIcon" style="width:14px;height:14px;"></span> Download template</button>
       <input type="file" id="importFileInput" accept="application/json" class="hidden">
     </div>
 
@@ -134,7 +136,10 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-tem
     <h3 id="courseModalTitle">New Course</h3>
     <div class="field"><label>Title</label><input type="text" id="cTitle" placeholder="Intro to Python"></div>
     <div class="field"><label>Description</label><textarea id="cDesc" placeholder="Learn the basics of Python programming."></textarea></div>
-    <div class="field"><label>Icon (emoji)</label><input type="text" id="cIcon" placeholder="🐍" maxlength="4"></div>
+    <div class="field"><label>Icon</label>
+      <div id="iconPicker" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;"></div>
+      <input type="hidden" id="cIcon" value="code">
+    </div>
     <div class="field">
       <label>Color</label>
       <div class="color-swatches" id="colorSwatches"></div>
@@ -192,6 +197,32 @@ const db = firebase.firestore();
 const ADMIN_EMAIL = 'siuozl@hotmail.com';
 
 function $(id){ return document.getElementById(id); }
+
+const ICONS = {
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.8 1.8 0 0 0 .36 2l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V19a2 2 0 1 1-4 0v-.08a1.8 1.8 0 0 0-1.18-1.65 1.8 1.8 0 0 0-2 .36l-.05.05A2 2 0 1 1 3.8 14.9l.05-.05a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H2.4a2 2 0 1 1 0-4h.08A1.8 1.8 0 0 0 4.13 6.6a1.8 1.8 0 0 0-.36-2l-.05-.05A2 2 0 1 1 6.55 1.7l.05.05a1.8 1.8 0 0 0 2 .36h.1a1.8 1.8 0 0 0 1.1-1.65V.4a2 2 0 1 1 4 0v.08a1.8 1.8 0 0 0 1.1 1.65h.1a1.8 1.8 0 0 0 2-.36l.05-.05A2 2 0 1 1 20.2 4.6l-.05.05a1.8 1.8 0 0 0-.36 2v.1a1.8 1.8 0 0 0 1.65 1.1h.16a2 2 0 1 1 0 4h-.08a1.8 1.8 0 0 0-1.65 1.1z"/></svg>',
+  code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L3 12l6 6M15 6l6 6-6 6"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5v-17z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/></svg>',
+  rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2.5c3 0 6 2 7 5-3 1-5 4-5 7l-6 6-3-3 6-6c0-3 2-5 5-7-3-1-6-1-4 5"/><path d="M9 15l-4 4M4.5 19.5L3 21l1.5-1.5z"/><circle cx="15" cy="9" r="1.4" fill="currentColor" stroke="none"/></svg>',
+  bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.1 2.2h5c0-.9.5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>',
+  puzzle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v2.5a1.8 1.8 0 0 1-3.6 0V3H3v5.5h2.5a1.8 1.8 0 0 1 0 3.6H3V17h5.4a1.8 1.8 0 0 1 3.6 0V21h5v-5.4a1.8 1.8 0 0 1 3.6 0H21V10h-2.4a1.8 1.8 0 0 1 0-3.6H21V3h-5v2.4a1.8 1.8 0 0 1-3.6 0V3H9z"/></svg>',
+  flask: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6M10 2v6.5L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 8.5V2"/><path d="M7.5 14h9"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 5H4v2a4 4 0 0 0 4 4M16 5h4v2a4 4 0 0 1-4 4"/><path d="M12 13v4M9 21h6M10 17h4v4h-4z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.2-6.4L21 4l-1 4.2c.6 1.1 1 2.4 1 3.8z"/></svg>',
+  upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 11l6-6 6 6M4 21h16"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6 13l6 6 6-6M4 21h16"/></svg>'
+};
+function iconHtml(key, size){
+  size = size || 18;
+  return `<span class="ic" style="width:${size}px;height:${size}px;">${ICONS[key]||ICONS.book}</span>`;
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  $('authGearIcon').innerHTML = ICONS.gear;
+  $('navGearIcon').innerHTML = ICONS.gear;
+  $('importIcon').innerHTML = ICONS.upload;
+  $('templateIcon').innerHTML = ICONS.download;
+});
+const COURSE_ICON_KEYS = ['code','book','rocket','bulb','target','puzzle','flask','trophy','chat'];
 function showToast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
 function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
 
@@ -257,7 +288,7 @@ function renderCourseList(){
   courses.forEach(c=>{
     const el = document.createElement('div');
     el.className = 'course-list-item' + (c.id===activeCourseId?' active':'');
-    el.innerHTML = `<div class="cli-left"><div class="cli-icon" style="background:${c.color||COLORS[0]}">${c.icon||'📘'}</div><span>${escapeHtml(c.title)}</span></div>`;
+    el.innerHTML = `<div class="cli-left"><div class="cli-icon" style="background:${c.color||COLORS[0]}">${iconHtml(c.icon||'code',16)}</div><span>${escapeHtml(c.title)}</span></div>`;
     el.addEventListener('click', ()=> selectCourse(c.id));
     list.appendChild(el);
   });
@@ -276,9 +307,9 @@ function renderWorkspace(course){
   const ws = $('workspace');
   ws.innerHTML = `
     <div class="course-detail-head">
-      <h2>${course.icon||'📘'} ${escapeHtml(course.title)}</h2>
+      <h2>${iconHtml(course.icon||'code',22)} ${escapeHtml(course.title)}</h2>
       <div style="display:flex;gap:8px;">
-        <button class="btn btn-ghost btn-sm" id="exportCourseBtn">⬇ Export JSON</button>
+        <button class="btn btn-ghost btn-sm" id="exportCourseBtn">${iconHtml('download',14)} Export JSON</button>
         <button class="btn btn-ghost btn-sm" id="editCourseBtn">Edit course</button>
         <button class="btn btn-danger btn-sm" id="deleteCourseBtn">Delete course</button>
       </div>
@@ -314,7 +345,7 @@ function renderWorkspace(course){
   $('addLessonBtn').addEventListener('click', ()=> openLessonModal(null));
   $('exportCourseBtn').addEventListener('click', ()=>{
     const exportData = {
-      title: course.title, description: course.description||'', icon: course.icon||'📘',
+      title: course.title, description: course.description||'', icon: course.icon||'code',
       color: course.color||COLORS[0], order: course.order||0,
       lessons: activeLessons.map(l=>({ title: l.title, order: l.order, steps: l.steps||[] }))
     };
@@ -341,12 +372,25 @@ function buildColorSwatches(){
 }
 
 let editingCourseId = null;
+function buildIconPicker(selectedKey){
+  const wrap = $('iconPicker');
+  wrap.innerHTML = '';
+  COURSE_ICON_KEYS.forEach(key=>{
+    const btn = document.createElement('div');
+    const isSel = key === selectedKey;
+    btn.style.cssText = `width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:${isSel?'rgba(124,92,255,0.35)':'rgba(255,255,255,0.06)'};border:2px solid ${isSel?'var(--accent)':'var(--card-border)'};color:${isSel?'#fff':'var(--text-dim)'};`;
+    btn.innerHTML = iconHtml(key, 18);
+    btn.addEventListener('click', ()=>{ $('cIcon').value = key; buildIconPicker(key); });
+    wrap.appendChild(btn);
+  });
+}
 function openCourseModal(course){
   editingCourseId = course ? course.id : null;
   $('courseModalTitle').textContent = course ? 'Edit Course' : 'New Course';
   $('cTitle').value = course ? course.title : '';
   $('cDesc').value = course ? course.description||'' : '';
-  $('cIcon').value = course ? course.icon||'' : '';
+  $('cIcon').value = course && course.icon ? course.icon : 'code';
+  buildIconPicker($('cIcon').value);
   $('cOrder').value = course ? (course.order||0) : (courses.length);
   selectedColor = course ? (course.color||COLORS[0]) : COLORS[0];
   buildColorSwatches();
@@ -358,7 +402,7 @@ $('courseModalSave').addEventListener('click', async ()=>{
   const title = $('cTitle').value.trim();
   if(!title){ showToast('Title is required'); return; }
   const data = {
-    title, description: $('cDesc').value.trim(), icon: $('cIcon').value.trim()||'📘',
+    title, description: $('cDesc').value.trim(), icon: $('cIcon').value.trim()||'code',
     color: selectedColor, order: Number($('cOrder').value)||0
   };
   const saveBtn = $('courseModalSave');
@@ -436,7 +480,12 @@ function renderStepsDraft(){
       </div>`;
     if(step.type==='content'){
       inner += `
-        <div class="field"><label>Emoji (optional)</label><input type="text" maxlength="4" data-field="emoji" data-idx="${idx}" value="${escapeHtml(step.emoji)}"></div>
+        <div class="field"><label>Icon (optional)</label>
+          <select data-field="emoji" data-idx="${idx}">
+            <option value="">None</option>
+            ${COURSE_ICON_KEYS.map(k=>`<option value="${k}" ${step.emoji===k?'selected':''}>${k}</option>`).join('')}
+          </select>
+        </div>
         <div class="field"><label>Title</label><input type="text" data-field="title" data-idx="${idx}" value="${escapeHtml(step.title)}"></div>
         <div class="field"><label>Body text</label><textarea data-field="body" data-idx="${idx}">${escapeHtml(step.body)}</textarea></div>
       `;
@@ -472,11 +521,15 @@ function renderStepsDraft(){
   wrap.querySelectorAll('[data-movedown]').forEach(b=> b.addEventListener('click', ()=>{
     const i = Number(b.dataset.movedown); if(i<stepsDraft.length-1){ [stepsDraft[i+1],stepsDraft[i]]=[stepsDraft[i],stepsDraft[i+1]]; renderStepsDraft(); }
   }));
-  wrap.querySelectorAll('[data-field]').forEach(inp=> inp.addEventListener('input', ()=>{
-    const idx = Number(inp.dataset.idx); const field = inp.dataset.field;
-    if(field==='answersCsv'){ stepsDraft[idx].answers = inp.value.split(',').map(s=>s.trim()).filter(Boolean); }
-    else stepsDraft[idx][field] = inp.value;
-  }));
+  wrap.querySelectorAll('[data-field]').forEach(inp=> {
+    const handler = ()=>{
+      const idx = Number(inp.dataset.idx); const field = inp.dataset.field;
+      if(field==='answersCsv'){ stepsDraft[idx].answers = inp.value.split(',').map(s=>s.trim()).filter(Boolean); }
+      else stepsDraft[idx][field] = inp.value;
+    };
+    inp.addEventListener('input', handler);
+    inp.addEventListener('change', handler);
+  });
   wrap.querySelectorAll('[data-mcqopt]').forEach(inp=> inp.addEventListener('input', ()=>{
     stepsDraft[Number(inp.dataset.mcqopt)].options[Number(inp.dataset.oi)] = inp.value;
   }));
@@ -537,7 +590,7 @@ async function deleteLesson(lessonId){
 const TEMPLATE = {
   title: "Intro to Python",
   description: "Learn the basics of Python programming from scratch.",
-  icon: "🐍",
+  icon: "code",
   color: "linear-gradient(135deg,#7c5cff,#00d4ff)",
   order: 0,
   lessons: [
@@ -545,7 +598,7 @@ const TEMPLATE = {
       title: "Variables & Data Types",
       order: 0,
       steps: [
-        { type: "content", emoji: "🐍", title: "What is a variable?", body: "A variable is a named container that stores a value. In Python you create one just by assigning a value, like x = 5." },
+        { type: "content", emoji: "code", title: "What is a variable?", body: "A variable is a named container that stores a value. In Python you create one just by assigning a value, like x = 5." },
         { type: "mcq", question: "Which line correctly creates a variable named age with value 10?", options: ["age = 10", "var age = 10", "int age = 10", "10 = age"], correctIndex: 0, explanation: "Python doesn't need type declarations — just name = value." },
         { type: "fillblank", question: "Fill in the blank: name ____ 'Ada' creates a string variable.", answers: ["=", "= "], explanation: "The equals sign assigns the value to the variable." },
         { type: "code", prompt: "Create a variable called message with the value 'Hello World' and print it.", starterCode: "let message = '';\nconsole.log(message);", expectedOutput: "Hello World" }
@@ -555,7 +608,7 @@ const TEMPLATE = {
       title: "Loops",
       order: 1,
       steps: [
-        { type: "content", emoji: "🔁", title: "For loops", body: "A for loop repeats a block of code a set number of times." },
+        { type: "content", emoji: "target", title: "For loops", body: "A for loop repeats a block of code a set number of times." },
         { type: "mcq", question: "How many times does this loop run: for i in range(5)?", options: ["4", "5", "6", "Infinite"], correctIndex: 1, explanation: "range(5) produces 0,1,2,3,4 — five values." }
       ]
     }
@@ -596,7 +649,7 @@ $('importFileInput').addEventListener('change', async (e)=>{
     const courseData = {
       title: data.title,
       description: data.description || '',
-      icon: data.icon || '📘',
+      icon: data.icon || 'code',
       color: data.color || COLORS[0],
       order: Number(data.order) || courses.length,
       lessonCount: data.lessons.length,
@@ -617,7 +670,7 @@ $('importFileInput').addEventListener('change', async (e)=>{
     });
     await batch.commit();
 
-    showToast(`Imported "${data.title}" with ${data.lessons.length} lessons! 🎉`);
+    showToast(`Imported "${data.title}" with ${data.lessons.length} lessons!`);
     activeCourseId = courseRef.id;
     await loadCourses();
     selectCourse(activeCourseId);
